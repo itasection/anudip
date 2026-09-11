@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>noVeX - Proctored Examination Suite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- FontAwesome Icons & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Cinzel:wght@800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Pacifico&family=Righteous&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       ULTRA-GLASSMORPHISM DESIGN SYSTEM & SHINE EFFECTS
+       ========================================================================== */
+    :root {
+      --bg-dark: #050714;
+      --bg-surface: #0a0e24;
+      
+      /* Glass surface tokens */
+      --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      --glass-bg-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 100%);
+      --glass-bg-card: rgba(16, 24, 52, 0.45);
+      
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --glass-border-light: rgba(255, 255, 255, 0.28);
+      --glass-border-glow: rgba(0, 242, 254, 0.5);
+      --glass-border-danger: rgba(255, 42, 109, 0.6);
+      
+      --accent-cyan: #00f2fe;
+      --accent-blue: #4facfe;
+      --accent-purple: #9d4edd;
+      --accent-emerald: #00e676;
+      --accent-amber: #ffab00;
+      --accent-rose: #ff2a6d;
+      
+      --text-main: #ffffff;
+      --text-muted: #a0aec0;
+      --text-dim: #64748b;
+      
+      --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --radius-xl: 34px;
+      
+      --shadow-glass: 0 20px 50px 0 rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+      --shadow-glow: 0 0 30px rgba(0, 242, 254, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Dynamic Multi-Layer Animated Glass Mesh */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: 
+        radial-gradient(circle at 12% 18%, rgba(0, 242, 254, 0.22) 0%, transparent 40%),
+        radial-gradient(circle at 88% 22%, rgba(157, 78, 221, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 48% 82%, rgba(79, 172, 254, 0.18) 0%, transparent 50%),
+        radial-gradient(circle at 82% 88%, rgba(255, 42, 109, 0.15) 0%, transparent 38%);
+      z-index: -2;
+      pointer-events: none;
+      filter: blur(20px);
+    }
+
+    /* Cyber Translucent Grid Overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 38px 38px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Interactive Cursor Spotlight Glow Effect */
+    #cursor-glow {
+      position: fixed;
+      top: 0; left: 0;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.18) 0%, rgba(157, 78, 221, 0.12) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+      filter: blur(20px);
+      transition: opacity 0.3s;
+    }
+
+    /* Floating Ambient Glass Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(45px);
+      z-index: -2;
+      pointer-events: none;
+      animation: floatOrb 14s infinite alternate ease-in-out;
+    }
+    .orb-1 { width: 380px; height: 380px; background: rgba(0, 242, 254, 0.18); top: 10%; left: 5%; animation-duration: 16s; }
+    .orb-2 { width: 420px; height: 420px; background: rgba(157, 78, 221, 0.22); bottom: 12%; right: 5%; animation-duration: 20s; }
+    .orb-3 { width: 320px; height: 320px; background: rgba(255, 42, 109, 0.15); top: 55%; left: 38%; animation-duration: 12s; }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(35px, -45px) scale(1.1); }
+      100% { transform: translate(-25px, 25px) scale(0.95); }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(5, 7, 20, 0.9); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.22); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+
+    /* ==========================================================================
+       GLASS NAVBAR
+       ========================================================================== */
+    .navbar {
+      height: 74px;
+      padding: 0 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 14, 36, 0.45);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .brand-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.4rem;
+      background: linear-gradient(90deg, #ffffff, #a5f3fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-tag {
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      border-radius: 30px;
+      background: rgba(0, 230, 118, 0.12);
+      border: 1px solid rgba(0, 230, 118, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--accent-emerald);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: currentColor;
+      box-shadow: 0 0 10px currentColor;
+      animation: pulse-ring 1.8s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.5; }
+      100% { transform: scale(0.95); opacity: 1; }
+    }
+
+    /* ==========================================================================
+       MAIN APP LAYOUT & FROSTED GLASS SIDEBAR
+       ========================================================================== */
+    .app-body {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      min-height: calc(100vh - 74px);
+    }
+
+    .sidebar {
+      width: 310px;
+      background: rgba(10, 14, 36, 0.4);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-right: 1px solid var(--glass-border);
+      padding: 2.25rem 1.75rem;
+      display: none; /* hidden until login */
+      flex-direction: column;
+      gap: 1.75rem;
+      flex-shrink: 0;
+      z-index: 10;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .candidate-card-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .avatar-circle {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 0 25px rgba(157, 78, 221, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      margin-bottom: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .candidate-name-display {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .candidate-dept-tag {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.12);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 3px 12px;
+      border-radius: 14px;
+      font-weight: 600;
+    }
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      transition: all 0.25s;
+    }
+    .info-box:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .info-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent-cyan);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .info-meta-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .info-meta-value {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    /* Main Container */
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 1.75rem 6rem 1.75rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Frosted Glass Card Component */
+    .card {
+      background: var(--glass-bg-card);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-glass);
+      padding: 3rem;
+      width: 100%;
+      max-width: 560px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: -100%; width: 200%; height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.9), rgba(157, 78, 221, 0.9), rgba(255, 42, 109, 0.9), transparent);
+      animation: borderSweep 4s linear infinite;
+    }
+
+    @keyframes borderSweep {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(50%); }
+    }
+
+    .card::after {
+      content: '';
+      position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Typography */
+    h2 {
+      font-family: var(--font-heading);
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 1.75rem;
+      text-transform: uppercase;
+    }
+
+    /* Inputs with Glass Styling */
+    input {
+      width: 100%;
+      padding: 15px 20px 15px 48px;
+      margin: 12px 0;
+      background: rgba(5, 7, 20, 0.65);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.25s;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.35), inset 0 1px 2px rgba(0, 0, 0, 0.5);
+      background: rgba(5, 7, 20, 0.85);
+    }
+
+    .input-field-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-field-icon {
+      position: absolute;
+      left: 18px;
+      color: var(--text-dim);
+      font-size: 1.15rem;
+      pointer-events: none;
+      transition: color 0.25s;
+    }
+
+    .input-field-wrapper:focus-within .input-field-icon {
+      color: var(--accent-cyan);
+    }
+
+    /* Glass Buttons */
+    button {
+      padding: 15px 30px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #050714;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 25px rgba(0, 242, 254, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 242, 254, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+      filter: brightness(1.1);
+    }
+
+    button:active { transform: translateY(0); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; filter: none; }
+
+    #loginBtn {
+      width: 100%;
+      margin-top: 14px;
+      padding: 16px;
+      background: linear-gradient(90deg, #ff8c00, #ff0080);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 25px rgba(255, 0, 128, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      font-size: 1.08rem;
+    }
+
+    #loginBtn:hover {
+      box-shadow: 0 8px 32px rgba(255, 0, 128, 0.6);
+    }
+
+    #error {
+      color: var(--accent-rose);
+      margin-top: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    /* Glass Overview Metrics Grid */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 1.75rem 0;
+      text-align: left;
+    }
+
+    .overview-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .overview-card-icon {
+      font-size: 1.4rem;
+      color: var(--accent-cyan);
+    }
+
+    .overview-val {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    .overview-lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Quiz Workspace */
+    .quiz-box { max-width: 740px; }
+    
+    .quiz-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .q-badge {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--accent-cyan);
+    }
+
+    .question {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 1rem 0 2rem 0;
+      line-height: 1.65;
+      text-align: left;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 1.75rem;
+    }
+
+    .options button {
+      width: 100%;
+      margin: 0;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #f1f5f9;
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      font-size: 1rem;
+      font-weight: 500;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      justify-content: flex-start;
+    }
+
+    .options button:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: var(--accent-cyan);
+      transform: translateX(8px);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Timer Pill */
+    #timer {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 24px;
+      border-radius: 30px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+      backdrop-filter: blur(12px);
+    }
+
+    .timer-green {
+      background: rgba(0, 230, 118, 0.15);
+      border: 1px solid rgba(0, 230, 118, 0.45);
+      color: var(--accent-emerald);
+      box-shadow: 0 0 20px rgba(0, 230, 118, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .red-blink {
+      background: rgba(255, 42, 109, 0.22);
+      border: 1px solid rgba(255, 42, 109, 0.65);
+      color: var(--accent-rose);
+      animation: blink 1s infinite;
+      box-shadow: 0 0 25px rgba(255, 42, 109, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes blink { 50% { opacity: 0.4; } }
+
+    /* Spinner */
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid var(--accent-cyan);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      animation: spin 0.8s linear infinite;
+      margin: 16px auto 0;
+      display: none;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Glass Footer */
+    footer {
+      background: rgba(10, 14, 36, 0.55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid var(--glass-border);
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 0.88rem;
+      position: fixed;
+      left: 0; bottom: 0; width: 100%;
+      z-index: 100;
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .developer-credit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .white-heart {
+      color: #ffffff !important;
+      display: inline-block;
+      margin: 0 4px;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+    }
+
+    .dev-group {
+      font-family: 'Audiowide', 'Orbitron', 'Righteous', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      background: linear-gradient(90deg, #00f2fe, #38bdf8, #9d4edd, #ff2a6d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-transform: none;
+      filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.45));
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .app-body { flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 14px 18px;
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+      }
+      .candidate-card-header { border-bottom: none; padding-bottom: 0; flex-direction: row; gap: 14px; }
+      .avatar-circle { width: 48px; height: 48px; font-size: 1.2rem; margin-bottom: 0; }
+      .info-list { flex-direction: row; gap: 10px; width: 100%; justify-content: space-around; }
+      .main { padding: 1.75rem 1rem 5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Glass Orbs & Cursor Glow Spotlight -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div id="cursor-glow"></div>
+
+  <!-- Top Glass Header Navigation -->
+  <header class="navbar">
+    <a href="#" class="brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div>
+        <div class="brand-title">noVeX</div>
+        <div class="brand-tag">Proctored Assessment Suite</div>
+      </div>
+    </a>
+
+    <div class="nav-status">
+      <div class="security-badge">
+        <span class="pulse-dot"></span>
+        <span>Proctoring Guard Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Body Layout -->
+  <div class="app-body">
+    
+    <!-- FROSTED GLASS SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="candidate-card-header">
+        <div class="avatar-circle" id="candidate-avatar">S</div>
+        <div>
+          <div class="candidate-name-display" id="sideNameDisplay">Student Profile</div>
+          <span class="candidate-dept-tag" id="sideDeptTag">Candidate</span>
+        </div>
+      </div>
+
+      <div class="info-list">
+        <div class="info-box">
+          <div class="info-icon"><i class="fa-solid fa-id-card"></i></div>
+          <div>
+            <div class="info-meta-label">Register ID</div>
+            <div class="info-meta-value" id="sideReg">-</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-icon"><i class="fa-solid fa-user"></i></div>
+          <div>
+            <div class="info-meta-label">Name</div>
+            <div class="info-meta-value" id="sideName">-</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div>
+            <div class="info-meta-label">Department</div>
+            <div class="info-meta-value" id="sideDept">-</div>
+          </div>
+        </div>
+
+        <div class="info-box" style="border-color: rgba(0, 230, 118, 0.4);">
+          <div class="info-icon" style="color: var(--accent-emerald);"><i class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <div class="info-meta-label">Status</div>
+            <div class="info-meta-value" style="color: var(--accent-emerald);">Verified & Ready</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      
+      <!-- 1. LOGIN PAGE -->
+      <div class="center-box login-box">
+        <div class="card">
+          <div style="font-size: 2.6rem; color: var(--accent-cyan); margin-bottom: 0.85rem; filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.5));">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <h2>Welcome to <strong>QUIZ PORTAL</strong></h2>
+          <h3>ROUND 1 ASSESSMENT</h3>
+
+          <div class="input-field-wrapper">
+            <input type="text" id="regId" placeholder="Register Number" required autocomplete="off">
+            <i class="fa-solid fa-id-card input-field-icon"></i>
+          </div>
+
+          <div class="input-field-wrapper">
+            <input type="password" id="password" placeholder="Password" required>
+            <i class="fa-solid fa-key input-field-icon"></i>
+          </div>
+
+          <button id="loginBtn" onclick="login()"><i class="fa-solid fa-right-to-bracket"></i> Login & Continue</button>
+          <div class="spinner" id="loginSpinner"></div>
+          <p id="error"></p>
+        </div>
+      </div>
+
+      <!-- 2. START PAGE OVERVIEW -->
+      <div class="center-box start-box" style="display:none;">
+        <div class="card">
+          <div style="font-size: 2.6rem; color: var(--accent-emerald); margin-bottom: 0.5rem; filter: drop-shadow(0 0 15px rgba(0, 230, 118, 0.5));">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h2>Welcome, <span id="studentName" style="color: var(--accent-cyan);"></span></h2>
+          <p style="color: var(--text-muted); font-size: 0.94rem;">Your credentials have been verified against the database.</p>
+
+          <!-- Exam Info Metrics Grid -->
+          <div class="overview-grid">
+            <div class="overview-card">
+              <i class="fa-regular fa-clock overview-card-icon"></i>
+              <div>
+                <div class="overview-val">20 Seconds</div>
+                <div class="overview-lbl">Per Question</div>
+              </div>
+            </div>
+            <div class="overview-card">
+              <i class="fa-solid fa-list-check overview-card-icon" style="color: var(--accent-purple);"></i>
+              <div>
+                <div class="overview-val">50 Questions</div>
+                <div class="overview-lbl">Total Round 1</div>
+              </div>
+            </div>
+          </div>
+
+          <button id="startBtn" onclick="startQuiz()" style="width: 100%; padding: 16px; font-size: 1.08rem;">
+            <i class="fa-solid fa-expand"></i> Enter Fullscreen & Start Quiz
+          </button>
+
+          <!-- Strict Anti-Cheat Warning Box -->
+          <div style="margin-top: 1.75rem; padding: 16px; background: rgba(255, 42, 109, 0.12); border: 1px solid var(--glass-border-danger); backdrop-filter: blur(12px); border-radius: var(--radius-md); font-size: 0.88rem; color: #e2e8f0; text-align: left;">
+            <div style="font-weight: 800; color: var(--accent-rose); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-triangle-exclamation"></i> STRICT PROCTORING RULES:
+            </div>
+            The quiz will run in mandatory full-screen mode. Exiting fullscreen, switching tabs/apps, or minimizing will immediately terminate the quiz with <b>0 marks</b> and you will be <span style="color: var(--accent-rose); font-weight: 700;">Eliminated</span> from Round 1.
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. LIVE QUIZ WORKSPACE -->
+      <div class="center-box quiz-box" style="display:none;">
+        <div class="card quiz-box">
+          <div class="quiz-header-bar">
+            <div class="q-badge" id="question-progress-badge">Question 1</div>
+            <div id="timer" class="timer-green"><i class="fa-regular fa-clock"></i> Time: 20s</div>
+          </div>
+
+          <div class="question" id="question">Loading question...</div>
+          <div class="options" id="options"></div>
+        </div>
+      </div>
+
+      <!-- 4. RESULT PAGE -->
+      <div class="center-box result-box" style="display:none;">
+        <div class="card">
+          <div style="font-size: 3.8rem; color: var(--accent-emerald); margin-bottom: 1rem; filter: drop-shadow(0 0 20px rgba(0, 230, 118, 0.6));">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h2>Quiz Completed</h2>
+          <p id="score"></p>
+          <div style="margin: 1.75rem 0; padding: 16px; background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); backdrop-filter: blur(12px); border-radius: var(--radius-md); font-size: 0.95rem; color: var(--accent-cyan);">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Your attempt has been recorded & synced to the Google Sheet database.
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="developer-credit">
+      <span>Developed with <i class="fa-solid fa-heart white-heart"></i> by</span>
+      <span class="dev-group">weBnovA</span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       JAVASCRIPT ENGINE (100% PRESERVED LOGIC & API CONTRACTS)
+       ========================================================================== -->
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfO0IdBZLnw-l_WeH6ioFeJ0F9JmijiEgZCH9XJJAgtC6Ncotday8TbCyqnq_vAK38/exec"; // Apps Script URL
+
+    // ====== Quiz Questions ======
+    const quizData = [
+      { question: "Which file holds project dependencies in Node.js?", options: ["package.json", "node.json", "app.js", "index.js"], answer: "package.json" },
+      { question: "Which component is used to display a scrollable list in Android?", options: ["CardView", "RecyclerView", "ImageView", "ConstraintLayout"], answer: "RecyclerView" },
+      { question: "Which programming language is mainly used with Flutter?", options: [ "Python", "Java","Dart", "Swift"], answer: "Dart" },
+      { question: "Which tool is commonly used for UI/UX design?", options: [ "VS Code","Figma", "Xcode", "Eclipse"], answer: "Figma" },
+      { question: "Which tag defines a table row?", options: ["<tr>", "<td>", "<th>", "<table>"], answer: "<tr>" },
+      { question: "What is the main goal of UX design?", options: [ "Making visuals attractive", "Increasing page load speed", "Reducing app size","Improving user satisfaction"], answer: "Improving user satisfaction" },
+      { question: "Which Flutter widget is used for scrolling content?", options: [ "ScrollView", "Recycler","ListView", "ScrollPane"], answer: "ListView" },
+      { question: "Which programming language is primarily used for Android app development?", options: ["Swift", "Kotlin", "PHP", "Ruby"], answer: "Kotlin" },
+      { question: "Which keyword is used to import modules in Node.js?", options: [ "import", "use","require", "include"], answer: "require" },
+      { question: "Which HTML tag defines the largest heading?", options: [ "<h6>", "<header>", "<head>","<h1>"], answer: "<h1>" },
+      { question: "Which Visual Studio extension helps with Git integration?", options: ["GitHub Extension", "Docker Tools", "ReSharper", "Azure Tools"], answer: "GitHub Extension" },
+      { question: "Which file defines the layout of an Android activity?", options: [ "layout.json", "activity_main.xml","AndroidManifest.xml", "gradle.build"], answer: "activity_main.xml" },
+      { question: "Hot reload in Flutter allows you to:", options: [ "Reinstall dependencies", "Reset app data", "Update UI without restarting the app","Recompile from scratch"], answer: "Update UI without restarting the app" },
+      { question: "Which company developed Visual Studio?", options: ["Microsoft", "Apple", "Google", "Adobe"], answer: "Microsoft" },
+      { question: "Which command starts a new React Native project?", options: [ "npm start", "expo build", "yarn install","npx react-native init"], answer: "npx react-native init" },
+      { question: "Which Node.js module is used to create a server?", options: [ "fs", "os", "http","url"], answer: "http" },
+      { question: "Which company created React Native?", options: [ "Google","Meta (Facebook)", "Apple", "Microsoft"], answer: "Meta (Facebook)" },
+      { question: "What file holds app dependencies in Flutter?", options: ["pubspec.yaml", "package.json", "build.gradle", "manifest.json"], answer: "pubspec.yaml" },
+      { question: "Which symbol is used to reference an id in CSS?", options: [ "@", ".","#", "!"], answer: "#" },
+      { question: "Which Android Studio tool is used for debugging?", options: [ "Profiler", "ADB", "Emulator","Logcat"], answer: "Logcat" },
+      { question: "Which attribute is used to open a link in a new tab?", options: [ "open=\"tab\"","target=\"_blank\"", "newtab", "href=\"new\""], answer: "target=\"_blank\"" },
+      { question: "Which programming language is used to write React Native apps?", options: ["JavaScript", "C++", "Python", "Swift"], answer: "JavaScript" },
+      { question: "What does UI stand for in UI/UX?", options: ["User Interface", "Unified Interface", "User Internet", "Universal Interaction"], answer: "User Interface" },
+      { question: "How do you center text in CSS?", options: [ "align: middle;", "position: center;", "margin: auto;","text-align: center;"], answer: "text-align: center;" },
+      { question: "Which property changes the text color in CSS?", options: [ "font-color", "fgcolor","color", "text-color"], answer: "color" },
+      { question: "Which file in React Native stores package dependencies?", options: [ "gradle.build", "app.js","package.json", "manifest.json"], answer: "package.json" },
+      { question: "Which command is used to create a new Flutter project?", options: [ "flutter start", "flutter new", "flutter init","flutter create"], answer: "flutter create" },
+      { question: "Which HTML tag is used to create a hyperlink?", options: ["<a>", "<url>", "<link>", "<href>"], answer: "<a>" },
+      { question: "Wireframes are mainly used to:", options: [ "Create animations", "Plan app layout","Write backend code", "Add color schemes"], answer: "Plan app layout" },
+      { question: "Which Node.js function is used to print to console?", options: [ "print()", "echo()", "console.log()","display()"], answer: "console.log()" },
+      { question: "Which file format is used for Android app installation?", options: ["ZIP", "APK", "EXE", "IPA"], answer: "APK" },
+      { question: "Which principle focuses on ease of navigation?", options: ["Usability", "Aesthetics", "Typography", "Contrast"], answer: "Usability" },
+      { question: "Which Flutter widget is used for layouts?", options: [ "Frame", "RecyclerView", "TableView","Container"], answer: "Container" },
+      { question: "Which programming language is primarily used for Android app development?", options: [ "PHP", "Ruby", "Swift","Kotlin"], answer: "Kotlin" },
+      { question: "Which Visual Studio feature helps find and fix code issues automatically?", options: ["Code Analyzer", "Live Share", "Debugger", "IntelliSense"], answer: "Code Analyzer" },
+      { question: "What does HTML stand for?", options: ["HyperText Markup Language", "HighText Machine Language", "Home Tool Markup Language", "Hyper Tool Multi Language"], answer: "HyperText Markup Language" },
+      { question: "Which color model is primarily used for digital UI design?", options: [ "CMYK","RGB", "HSB", "LAB"], answer: "RGB" },
+      { question: "Which command installs all dependencies in Node.js?", options: [ "npm start", "npm build", "node install","npm install"], answer: "npm install" },
+      { question: "Which tag is used to display an image in HTML?", options: [ "<image>", "<picture>","<img>", "<src>"], answer: "<img>" },
+      { question: "Which file format represents a Visual Studio solution?", options: [".sln", ".csproj", ".vsproj", ".dll"], answer: ".sln" },
+      { question: "Which AndroidManifest.xml purpose?", options: [ "To manage Gradle dependencies", "To design layouts", "To store user data","To declare app components"], answer: "To declare app components" },
+      { question: "Which Node.js engine is used?", options: ["V8", "SpiderMonkey", "Chakra", "Nashorn"], answer: "V8" },
+      { question: "Which component is used for text display in React Native?", options: [ "Paragraph","Text", "Typography", "Label"], answer: "Text" },
+      { question: "Which Android Studio tool is used for debugging?", options: [ "Profiler","Logcat", "ADB", "Emulator"], answer: "Logcat" },
+      { question: "Which company created React Native?", options: ["Meta (Facebook)", "Google", "Apple", "Microsoft"], answer: "Meta (Facebook)" },
+      { question: "Which Flutter file holds dependencies?", options: [ "package.json", "build.gradle", "manifest.json","pubspec.yaml"], answer: "pubspec.yaml" },
+      { question: "Which symbol is used to reference an id in CSS?", options: [ "@", ".","#", "!"], answer: "#" },
+      { question: "Which company developed Visual Studio?", options: [ "Apple", "Microsoft","Google", "Adobe"], answer: "Microsoft" },
+      { question: "Which Node.js module is used to create a server?", options: ["http", "fs", "os", "url"], answer: "http" },
+      { question: "Hot reload in Flutter allows you to:", options: [ "Reinstall dependencies", "Reset app data","Update UI without restarting the app","Recompile from scratch"], answer: "Update UI without restarting the app" }
+    ];
+
+    // ====== State ======
+    let currentQ = 0, score = 0, timer, timeLeft = 20;
+    let quizActive = false;
+    let hasSubmitted = false;
+    let sessionToken = null;
+
+    // ====== Helpers: Fullscreen ======
+    function enterFullscreen() {
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    }
+    function isFullscreen() {
+      return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    }
+
+    // ====== Login ======
+    function login() {
+      const regId = document.getElementById("regId").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const spinner = document.getElementById("loginSpinner");
+      const err = document.getElementById("error");
+      err.innerText = "";
+
+      // Validation alert if details are missing
+      if (!regId && !password) {
+        err.innerText = "⚠️ Please enter both Register Number and Password!";
+        return;
+      } else if (!regId) {
+        err.innerText = "⚠️ Please enter your Register Number!";
+        return;
+      } else if (!password) {
+        err.innerText = "⚠️ Please enter your Password!";
+        return;
+      }
+
+      spinner.style.display = "block";
+      document.getElementById("loginBtn").disabled = true;
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({ action: "login", regId, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        spinner.style.display = "none";
+        document.getElementById("loginBtn").disabled = false;
+
+        if (data.status === "success") {
+          sessionToken = data.token;
+          localStorage.setItem("regId", regId);
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("dept", data.dept);
+          localStorage.setItem("token", sessionToken);
+
+          // Update UI Profile
+          document.querySelector(".login-box").style.display = "none";
+          document.getElementById("studentName").innerText = `${data.name} (${regId})`;
+          document.getElementById("sideNameDisplay").innerText = data.name;
+          document.getElementById("sideDeptTag").innerText = data.dept;
+          document.getElementById("candidate-avatar").innerText = data.name ? data.name.charAt(0).toUpperCase() : "S";
+          
+          document.querySelector(".start-box").style.display = "block";
+
+          // Show sidebar
+          document.getElementById("sidebar").style.display = "flex";
+          document.getElementById("sideReg").innerText = regId;
+          document.getElementById("sideName").innerText = data.name;
+          document.getElementById("sideDept").innerText = data.dept;
+
+        } else if (data.status === "already") {
+          document.querySelector(".login-box .card").innerHTML =
+            `<h2>Attempt Recorded</h2><p style="color: var(--accent-amber); margin-top: 1rem; font-weight: 600;">You have already completed this quiz.</p>`;
+        } else {
+          err.innerText = "Invalid Register No or Password!";
+        }
+      })
+      .catch(() => {
+        spinner.style.display = "none";
+        document.getElementById("loginBtn").disabled = false;
+        err.innerText = "Server Error!";
+      });
+    }
+
+    // ====== Start Quiz ======
+    function startQuiz() {
+      document.querySelector(".start-box").style.display = "none";
+      document.querySelector(".quiz-box").style.display = "block";
+      quizActive = true;
+      hasSubmitted = false;
+      score = 0;
+      currentQ = 0;
+
+      enterFullscreen();
+      loadQuestion();
+    }
+
+    document.addEventListener("keydown", (e) => { if (e.key === "Enter") document.getElementById("loginBtn").click(); });
+
+    // ====== Load Question ======
+    function loadQuestion() {
+      if (currentQ >= quizData.length) {
+        showResult(false);
+        return;
+      }
+
+      const progressEl = document.getElementById("question-progress-badge");
+      if (progressEl) progressEl.innerText = `Question ${currentQ + 1} of ${quizData.length}`;
+
+      document.getElementById("question").innerText = quizData[currentQ].question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      quizData[currentQ].options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(opt);
+        optionsDiv.appendChild(btn);
+      });
+
+      resetTimer();
+    }
+
+    // ====== Timer ======
+    function resetTimer() {
+      clearInterval(timer);
+      timeLeft = 20;
+      updateTimerDisplay();
+
+      timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          currentQ++;
+          loadQuestion();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const timerEl = document.getElementById("timer");
+      timerEl.innerHTML = `<i class="fa-regular fa-clock"></i> Time: ${timeLeft}s`;
+      timerEl.classList.remove("red-blink","timer-green");
+      if (timeLeft <= 8) timerEl.classList.add("red-blink");
+      else timerEl.classList.add("timer-green");
+    }
+
+    // ====== Answer Check ======
+    function checkAnswer(answer) {
+      if (answer === quizData[currentQ].answer) score++;
+      currentQ++;
+      clearInterval(timer);
+      loadQuestion();
+    }
+
+    // ====== Show Result & Submit ======
+    function showResult(forcedEnd = false) {
+      if (hasSubmitted) return;
+      hasSubmitted = true;
+
+      clearInterval(timer);
+      quizActive = false;
+
+      if (forcedEnd) score = 0;
+
+      document.querySelector(".quiz-box").style.display = "none";
+      document.querySelector(".result-box").style.display = "block";
+
+      const regId = localStorage.getItem("regId");
+      const token = localStorage.getItem("token") || sessionToken;
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "submitScore",
+          regId,
+          score,
+          token,
+          forced: !!forcedEnd
+        })
+      }).catch(()=>{});
+
+      if (isFullscreen()) {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      }
+    }
+
+    // ====== Force Fail (security triggers) ======
+    function forceFail() {
+      if (!quizActive) return;
+      showResult(true);
+    }
+
+    // ====== Security Event Listeners ======
+    document.addEventListener("fullscreenchange", () => {
+      if (quizActive && !isFullscreen()) forceFail();
+    });
+    document.addEventListener("webkitfullscreenchange", () => {
+      if (quizActive && !isFullscreen()) forceFail();
+    });
+    document.addEventListener("mozfullscreenchange", () => {
+      if (quizActive && !isFullscreen()) forceFail();
+    });
+    document.addEventListener("MSFullscreenChange", () => {
+      if (quizActive && !isFullscreen()) forceFail();
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (quizActive && document.hidden) forceFail();
+    });
+
+    window.addEventListener("blur", () => {
+      if (quizActive) forceFail();
+    });
+
+    window.addEventListener("beforeunload", (e) => {
+      if (quizActive) {
+        e.preventDefault();
+        e.returnValue = '';
+        forceFail();
+      }
+    });
+
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    // ====== Interactive Mouse Cursor Spotlight Effect ======
+    document.addEventListener("mousemove", (e) => {
+      const glow = document.getElementById("cursor-glow");
+      if (glow) {
+        glow.style.left = e.clientX + "px";
+        glow.style.top = e.clientY + "px";
+      }
+    });
+  </script>
+</body>
+</html>
