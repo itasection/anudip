@@ -6,8 +6,9 @@
   <title>noVeX - Proctored Examination Suite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- FontAwesome Icons & Google Fonts -->
+  <!-- FontAwesome Icons & Google Fonts & html2pdf -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -1035,6 +1036,40 @@
         padding: 1.75rem 1rem 5rem 1rem;
       }
     }
+
+    /* Print Stylesheet for Candidate Performance Report */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      
+      #pdfReportTemplate, #pdfReportTemplate * {
+        visibility: visible !important;
+      }
+
+      #pdfReportTemplate {
+        display: block !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        padding: 24px !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        border: 2px solid #0284c7 !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+      }
+
+      #pdfReportTemplate h1 { color: #0284c7 !important; }
+      #pdfReportTemplate h3 { color: #0369a1 !important; }
+      #pdfReportTemplate table { color: #0f172a !important; }
+      #pdfReportTemplate td { color: #334155 !important; }
+      #pdfReportTemplate td[id] { color: #0f172a !important; }
+      #pdfReportTemplate #pdfScore { color: #0284c7 !important; }
+      #pdfReportTemplate #pdfPercentage { color: #0f172a !important; }
+      #pdfReportTemplate div { border-color: #cbd5e1 !important; }
+    }
   </style>
 </head>
 
@@ -1290,8 +1325,87 @@
           <div style="margin: 1.5rem 0 0.5rem 0; padding: 14px; background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); backdrop-filter: blur(12px); border-radius: var(--radius-md); font-size: 0.92rem; color: var(--accent-cyan);">
             <i class="fa-solid fa-cloud-arrow-up"></i> Your attempt has been recorded & synced to the Google Sheet database.
           </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 1rem; width: 100%;">
+            <button id="downloadPdfBtn" onclick="generatePdfReport()" style="flex: 1; padding: 15px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); color: #050714; font-weight: 800; font-size: 1rem; border-radius: var(--radius-md); box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <i class="fa-solid fa-file-pdf" style="font-size: 1.1rem;"></i> Download PDF
+            </button>
+            <button id="printReportBtn" onclick="printReport()" style="flex: 1; padding: 15px; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border-light); color: #ffffff; font-weight: 800; font-size: 1rem; border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <i class="fa-solid fa-print" style="font-size: 1.1rem;"></i> Print Report
+            </button>
+          </div>
         </div>
       </div>
+
+    </main>
+  </div>
+
+  <!-- Hidden Printable / PDF Report Template -->
+  <div id="pdfReportTemplate" style="display: none; padding: 35px; background: #080c24; color: #ffffff; font-family: 'Inter', sans-serif; border: 2px solid #00f2fe; border-radius: 14px; width: 750px; margin: 0 auto;">
+    
+    <!-- PDF Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0, 242, 254, 0.3); padding-bottom: 18px; margin-bottom: 22px;">
+      <div>
+        <h1 style="font-family: 'Outfit', sans-serif; font-size: 26px; color: #00f2fe; margin: 0; font-weight: 900; letter-spacing: 0.5px;">noVeX</h1>
+        <p style="font-size: 12px; color: #a0aec0; margin: 3px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Proctored Assessment Suite</p>
+      </div>
+      <div style="text-align: right;">
+        <span style="font-size: 11px; background: rgba(0, 242, 254, 0.15); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.4); padding: 5px 12px; border-radius: 14px; font-weight: 800; letter-spacing: 1px;">OFFICIAL PERFORMANCE REPORT</span>
+        <p id="pdfDate" style="font-size: 11px; color: #64748b; margin: 6px 0 0 0; font-weight: 500;"></p>
+      </div>
+    </div>
+
+    <!-- Candidate Profile Section -->
+    <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+      <h3 style="font-size: 13px; color: #38bdf8; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Candidate Details</h3>
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <tr>
+          <td style="padding: 7px 0; color: #a0aec0; width: 32%; font-weight: 600;">Student Name:</td>
+          <td id="pdfStudentName" style="padding: 7px 0; color: #ffffff; font-weight: 700;">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 7px 0; color: #a0aec0; font-weight: 600;">Register Number:</td>
+          <td id="pdfRegId" style="padding: 7px 0; color: #00f2fe; font-weight: 700;">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 7px 0; color: #a0aec0; font-weight: 600;">Department:</td>
+          <td id="pdfDepartment" style="padding: 7px 0; color: #ffffff; font-weight: 700;">-</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Score Breakdown & Status Section -->
+    <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 18px; margin-bottom: 22px;">
+      <h3 style="font-size: 13px; color: #38bdf8; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Assessment Results Summary</h3>
+      
+      <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 18px; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 8px;">
+        <div>
+          <div style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700;">Marks Secured</div>
+          <div id="pdfScore" style="font-size: 28px; font-weight: 900; color: #00f2fe; margin-top: 3px;">0 / 10</div>
+        </div>
+        <div>
+          <div style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700;">Percentage Score</div>
+          <div id="pdfPercentage" style="font-size: 28px; font-weight: 900; color: #ffffff; margin-top: 3px;">0%</div>
+        </div>
+        <div>
+          <div style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Evaluation Status</div>
+          <div id="pdfStatus" style="font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 14px; display: inline-block; letter-spacing: 0.5px;">COMPLETED</div>
+        </div>
+      </div>
+
+      <!-- Remarks / Violation message -->
+      <div id="pdfRemarksBox" style="font-size: 12px; padding: 12px 16px; border-radius: 8px; background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); color: #e2e8f0; line-height: 1.5;">
+        <strong style="color: #00f2fe;">Remarks:</strong> <span id="pdfRemarksText">Candidate completed the assessment.</span>
+      </div>
+    </div>
+
+    <!-- PDF Footer & Credits -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 16px; font-size: 11px; color: #64748b;">
+      <div>Website: <strong style="color: #a0aec0;">noVeX Proctored Assessment Suite</strong></div>
+      <div>Credits: <strong style="color: #a0aec0;">Developed by weBnovA</strong></div>
+      <div>Security Guard: <strong style="color: #00e676;">Verified & Logged</strong></div>
+    </div>
+  </div>
 
     </main>
   </div>
@@ -1677,6 +1791,28 @@
       if (correctEl) correctEl.innerText = score;
       if (accuracyEl) accuracyEl.innerText = `${percentage}%`;
 
+      // Populate PDF template fields
+      const pdfDateEl = document.getElementById("pdfDate");
+      const pdfNameEl = document.getElementById("pdfStudentName");
+      const pdfRegEl = document.getElementById("pdfRegId");
+      const pdfDeptEl = document.getElementById("pdfDepartment");
+      const pdfScoreEl = document.getElementById("pdfScore");
+      const pdfPctEl = document.getElementById("pdfPercentage");
+      const pdfStatusEl = document.getElementById("pdfStatus");
+      const pdfRemarksBox = document.getElementById("pdfRemarksBox");
+      const pdfRemarksText = document.getElementById("pdfRemarksText");
+
+      const studentName = localStorage.getItem("name") || "Student";
+      const studentReg = localStorage.getItem("regId") || "-";
+      const studentDept = localStorage.getItem("dept") || "General";
+
+      if (pdfDateEl) pdfDateEl.innerText = new Date().toLocaleString();
+      if (pdfNameEl) pdfNameEl.innerText = studentName;
+      if (pdfRegEl) pdfRegEl.innerText = studentReg;
+      if (pdfDeptEl) pdfDeptEl.innerText = studentDept;
+      if (pdfScoreEl) pdfScoreEl.innerText = `${score} / ${totalQ}`;
+      if (pdfPctEl) pdfPctEl.innerText = `${percentage}%`;
+
       if (forcedEnd) {
         if (iconEl) {
           iconEl.style.color = "var(--accent-rose)";
@@ -1685,9 +1821,22 @@
         if (titleEl) titleEl.innerText = "Exam Terminated!";
         if (badgeEl) {
           badgeEl.className = "result-status-badge result-status-fail";
-          badgeEl.innerText = "Security Violation";
+          badgeEl.innerText = "Disqualified (Security Violation)";
         }
         if (msgEl) msgEl.innerText = "Exam terminated automatically due to window blur, tab switch, or exiting fullscreen mode.";
+
+        if (pdfStatusEl) {
+          pdfStatusEl.innerText = "DISQUALIFIED (SECURITY VIOLATION)";
+          pdfStatusEl.style.background = "rgba(255, 42, 109, 0.2)";
+          pdfStatusEl.style.color = "#ff2a6d";
+        }
+        if (pdfRemarksBox) {
+          pdfRemarksBox.style.background = "rgba(255, 42, 109, 0.1)";
+          pdfRemarksBox.style.borderColor = "rgba(255, 42, 109, 0.4)";
+        }
+        if (pdfRemarksText) {
+          pdfRemarksText.innerText = "DISQUALIFIED: Proctoring Guard detected tab-switching, window blur, or exiting fullscreen mode during active assessment. Forced 0 Marks.";
+        }
       } else {
         if (iconEl) {
           iconEl.style.color = "var(--accent-emerald)";
@@ -1699,6 +1848,19 @@
           badgeEl.innerText = percentage >= 50 ? "Passed" : "Completed";
         }
         if (msgEl) msgEl.innerText = `You scored ${score} out of ${totalQ} (${percentage}%). Great effort!`;
+
+        if (pdfStatusEl) {
+          pdfStatusEl.innerText = percentage >= 50 ? "PASSED" : "COMPLETED";
+          pdfStatusEl.style.background = "rgba(0, 230, 118, 0.2)";
+          pdfStatusEl.style.color = "#00e676";
+        }
+        if (pdfRemarksBox) {
+          pdfRemarksBox.style.background = "rgba(0, 242, 254, 0.08)";
+          pdfRemarksBox.style.borderColor = "rgba(0, 242, 254, 0.3)";
+        }
+        if (pdfRemarksText) {
+          pdfRemarksText.innerText = `Candidate successfully completed the assessment with a score of ${score}/10 (${percentage}%).`;
+        }
       }
 
       const regId = localStorage.getItem("regId");
@@ -1721,6 +1883,55 @@
         else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
         else if (document.msExitFullscreen) document.msExitFullscreen();
       }
+    }
+
+    // ====== Generate & Download Official PDF Report ======
+    function generatePdfReport() {
+      const element = document.getElementById("pdfReportTemplate");
+      if (!element) return;
+
+      const regId = localStorage.getItem("regId") || "Candidate";
+      const filename = `Assessment_Report_${regId}.pdf`;
+
+      const tempDiv = document.createElement("div");
+      tempDiv.style.position = "absolute";
+      tempDiv.style.left = "-9999px";
+      tempDiv.style.top = "0";
+
+      const clone = element.cloneNode(true);
+      clone.style.display = "block";
+      tempDiv.appendChild(clone);
+      document.body.appendChild(tempDiv);
+
+      if (typeof html2pdf !== "undefined") {
+        const opt = {
+          margin: 0.2,
+          filename: filename,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, backgroundColor: '#080c24', useCORS: true },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(clone).save().then(() => {
+          document.body.removeChild(tempDiv);
+        }).catch(() => {
+          document.body.removeChild(tempDiv);
+          window.print();
+        });
+      } else {
+        document.body.removeChild(tempDiv);
+        window.print();
+      }
+    }
+
+    // ====== Print Official Candidate Report ======
+    function printReport() {
+      const element = document.getElementById("pdfReportTemplate");
+      if (!element) return;
+
+      element.style.display = "block";
+      window.print();
+      element.style.display = "none";
     }
 
     // ====== Force Fail (security triggers) ======
