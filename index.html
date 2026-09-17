@@ -561,7 +561,6 @@
     }
 
     /* Glass Buttons */
-    /* Score Result Card Aesthetics */
     .score-display-card {
       background: linear-gradient(135deg, rgba(0, 242, 254, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
       border: 1px solid var(--glass-border-glow);
@@ -995,6 +994,334 @@
       filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.45));
     }
 
+    /* ==========================================================================
+       ADMIN PANEL & MODAL STYLES
+       ========================================================================== */
+    .admin-link-wrapper {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--glass-border);
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-admin-link {
+      background: rgba(157, 78, 221, 0.15) !important;
+      color: #e0aaff !important;
+      border: 1px solid rgba(157, 78, 221, 0.4) !important;
+      font-size: 0.92rem !important;
+      padding: 10px 22px !important;
+      border-radius: 30px !important;
+      box-shadow: 0 0 18px rgba(157, 78, 221, 0.25) !important;
+      transition: all 0.25s ease !important;
+    }
+
+    .btn-admin-link:hover {
+      background: rgba(157, 78, 221, 0.3) !important;
+      border-color: rgba(157, 78, 221, 0.8) !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 25px rgba(157, 78, 221, 0.5) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* Modal Backdrop & Modal Box */
+    .admin-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 7, 20, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .admin-modal {
+      background: var(--glass-bg-card);
+      border: 1px solid var(--glass-border-glow);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-glass), 0 0 40px rgba(157, 78, 221, 0.3);
+      position: relative;
+      text-align: center;
+    }
+
+    .admin-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 6px;
+      box-shadow: none;
+    }
+
+    .admin-modal-close:hover {
+      color: var(--accent-rose);
+      transform: scale(1.1);
+      box-shadow: none;
+    }
+
+    /* Admin Box Layout */
+    .admin-box {
+      max-width: 860px !important;
+      text-align: left !important;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .admin-title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(157, 78, 221, 0.2);
+      border: 1px solid rgba(157, 78, 221, 0.5);
+      color: #e0aaff;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-card-section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .admin-card-section:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .admin-section-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Test Publish Control Toggle Card */
+    .publish-control-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+
+    .publish-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .publish-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+
+    .pill-published {
+      background: rgba(0, 230, 118, 0.18);
+      border: 1px solid rgba(0, 230, 118, 0.5);
+      color: var(--accent-emerald);
+      box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+    }
+
+    .pill-stopped {
+      background: rgba(255, 42, 109, 0.18);
+      border: 1px solid rgba(255, 42, 109, 0.5);
+      color: var(--accent-rose);
+      box-shadow: 0 0 20px rgba(255, 42, 109, 0.3);
+    }
+
+    .btn-toggle-publish {
+      padding: 12px 24px !important;
+      font-size: 0.95rem !important;
+      border-radius: var(--radius-md) !important;
+    }
+
+    .btn-stop-test {
+      background: linear-gradient(135deg, #ff2a6d, #d00000) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 20px rgba(255, 42, 109, 0.4) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .btn-publish-test {
+      background: linear-gradient(135deg, #00e676, #00b0ff) !important;
+      color: #050714 !important;
+      box-shadow: 0 4px 20px rgba(0, 230, 118, 0.4) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    /* Sheet Direct Links Cards */
+    .sheet-links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .sheet-links-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sheet-link-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(10, 14, 36, 0.6);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sheet-link-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.25);
+      background: rgba(10, 14, 36, 0.85);
+    }
+
+    .sheet-icon-auth {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(0, 230, 118, 0.15);
+      border: 1px solid rgba(0, 230, 118, 0.4);
+      color: var(--accent-emerald);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .sheet-icon-questions {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(0, 242, 254, 0.15);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .sheet-info {
+      flex: 1;
+    }
+
+    .sheet-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .sheet-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .sheet-external-icon {
+      color: var(--text-dim);
+      font-size: 1rem;
+      transition: color 0.25s, transform 0.25s;
+    }
+
+    .sheet-link-card:hover .sheet-external-icon {
+      color: var(--accent-cyan);
+      transform: translate(2px, -2px);
+    }
+
+    /* Live Question Inspector Table */
+    .admin-q-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .admin-q-table th {
+      background: rgba(0, 0, 0, 0.4);
+      color: var(--accent-cyan);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 1px solid var(--glass-border);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .admin-q-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+    }
+
+    .admin-q-table tr:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
     /* Responsive Design */
     @media (max-width: 900px) {
       .app-body {
@@ -1042,8 +1369,9 @@
       body * {
         visibility: hidden !important;
       }
-      
-      #pdfReportTemplate, #pdfReportTemplate * {
+
+      #pdfReportTemplate,
+      #pdfReportTemplate * {
         visibility: visible !important;
       }
 
@@ -1061,14 +1389,37 @@
         box-shadow: none !important;
       }
 
-      #pdfReportTemplate h1 { color: #0284c7 !important; }
-      #pdfReportTemplate h3 { color: #0369a1 !important; }
-      #pdfReportTemplate table { color: #0f172a !important; }
-      #pdfReportTemplate td { color: #334155 !important; }
-      #pdfReportTemplate td[id] { color: #0f172a !important; }
-      #pdfReportTemplate #pdfScore { color: #0284c7 !important; }
-      #pdfReportTemplate #pdfPercentage { color: #0f172a !important; }
-      #pdfReportTemplate div { border-color: #cbd5e1 !important; }
+      #pdfReportTemplate h1 {
+        color: #0284c7 !important;
+      }
+
+      #pdfReportTemplate h3 {
+        color: #0369a1 !important;
+      }
+
+      #pdfReportTemplate table {
+        color: #0f172a !important;
+      }
+
+      #pdfReportTemplate td {
+        color: #334155 !important;
+      }
+
+      #pdfReportTemplate td[id] {
+        color: #0f172a !important;
+      }
+
+      #pdfReportTemplate #pdfScore {
+        color: #0284c7 !important;
+      }
+
+      #pdfReportTemplate #pdfPercentage {
+        color: #0f172a !important;
+      }
+
+      #pdfReportTemplate div {
+        border-color: #cbd5e1 !important;
+      }
     }
   </style>
 </head>
@@ -1227,6 +1578,13 @@
             <div id="regMessage"></div>
           </div>
 
+          <!-- ADMIN PANEL BUTTON LINK -->
+          <div class="admin-link-wrapper">
+            <button type="button" class="btn-admin-link" onclick="openAdminModal()">
+              <i class="fa-solid fa-user-gear"></i> Admin Panel
+            </button>
+          </div>
+
         </div>
       </div>
 
@@ -1253,7 +1611,7 @@
             <div class="overview-card">
               <i class="fa-solid fa-list-check overview-card-icon" style="color: var(--accent-purple);"></i>
               <div>
-                <div class="overview-val">10 Questions</div>
+                <div class="overview-val" id="startBoxTotalQVal">Loading...</div>
                 <div class="overview-lbl">Total Questions</div>
               </div>
             </div>
@@ -1270,7 +1628,8 @@
               style="font-weight: 800; color: var(--accent-rose); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
               <i class="fa-solid fa-triangle-exclamation"></i> STRICT PROCTORING RULES:
             </div>
-            The assessment will run in mandatory full-screen mode. Exiting fullscreen, switching tabs/apps, or minimizing will
+            The assessment will run in mandatory full-screen mode. Exiting fullscreen, switching tabs/apps, or
+            minimizing will
             immediately terminate the assessment with <b>0 marks</b> and you will be <span
               style="color: var(--accent-rose); font-weight: 700;">Disqualified</span>.
           </div>
@@ -1293,7 +1652,8 @@
       <!-- 4. RESULT PAGE -->
       <div class="center-box result-box" style="display:none;">
         <div class="card">
-          <div id="resultHeaderIcon" style="font-size: 3.8rem; color: var(--accent-emerald); margin-bottom: 0.5rem; filter: drop-shadow(0 0 20px rgba(0, 230, 118, 0.6));">
+          <div id="resultHeaderIcon"
+            style="font-size: 3.8rem; color: var(--accent-emerald); margin-bottom: 0.5rem; filter: drop-shadow(0 0 20px rgba(0, 230, 118, 0.6));">
             <i class="fa-solid fa-award"></i>
           </div>
           <h2 id="resultTitle">Quiz Completed</h2>
@@ -1303,7 +1663,7 @@
           <div class="score-display-card">
             <div class="score-main">
               <span id="scoreValue" class="score-val">0</span>
-              <span class="score-total">/ <span id="scoreTotal">50</span></span>
+              <span class="score-total">/ <span id="scoreTotal">10</span></span>
             </div>
             <div class="score-percentage-pill" id="scorePercentagePill">0% Score</div>
           </div>
@@ -1322,17 +1682,134 @@
 
           <p id="scoreMessage" style="color: var(--text-muted); font-size: 0.95rem; margin-top: 1rem;"></p>
 
-          <div style="margin: 1.5rem 0 0.5rem 0; padding: 14px; background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); backdrop-filter: blur(12px); border-radius: var(--radius-md); font-size: 0.92rem; color: var(--accent-cyan);">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Your attempt has been recorded & synced to the Google Sheet database.
+          <div
+            style="margin: 1.5rem 0 0.5rem 0; padding: 14px; background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); backdrop-filter: blur(12px); border-radius: var(--radius-md); font-size: 0.92rem; color: var(--accent-cyan);">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Your attempt has been recorded & synced to the Google Sheet
+            database.
           </div>
 
           <div style="display: flex; gap: 12px; margin-top: 1rem; width: 100%;">
-            <button id="downloadPdfBtn" onclick="generatePdfReport()" style="flex: 1; padding: 15px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); color: #050714; font-weight: 800; font-size: 1rem; border-radius: var(--radius-md); box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <button id="downloadPdfBtn" onclick="generatePdfReport()"
+              style="flex: 1; padding: 15px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); color: #050714; font-weight: 800; font-size: 1rem; border-radius: var(--radius-md); box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
               <i class="fa-solid fa-file-pdf" style="font-size: 1.1rem;"></i> Download PDF
             </button>
-            <button id="printReportBtn" onclick="printReport()" style="flex: 1; padding: 15px; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border-light); color: #ffffff; font-weight: 800; font-size: 1rem; border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <button id="printReportBtn" onclick="printReport()"
+              style="flex: 1; padding: 15px; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border-light); color: #ffffff; font-weight: 800; font-size: 1rem; border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
               <i class="fa-solid fa-print" style="font-size: 1.1rem;"></i> Print Report
             </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. ADMIN CONTROL PANEL -->
+      <div class="center-box admin-box" id="adminPanelBox" style="display:none;">
+        <div class="card admin-box">
+          <div class="admin-header">
+            <div>
+              <div class="admin-title-badge"><i class="fa-solid fa-user-shield"></i> Admin Portal</div>
+              <h2 style="font-size: 1.75rem; margin-top: 6px;">Assessment Control Panel</h2>
+            </div>
+            <button type="button" onclick="hideAdminPanel()"
+              style="background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border); color: #fff; padding: 10px 18px; font-size: 0.88rem;">
+              <i class="fa-solid fa-right-from-bracket"></i> Exit Admin
+            </button>
+          </div>
+
+          <div class="admin-grid">
+            <!-- Control 1: Test Publish Control -->
+            <div class="admin-card-section">
+              <div class="admin-section-title">
+                <i class="fa-solid fa-toggle-on" style="color: var(--accent-cyan);"></i> 1. Test Publish Control
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.86rem; margin-bottom: 1rem;">
+                Toggle whether candidates can log in and take exams. Stopping the test locks candidate access.
+              </p>
+              <div class="publish-control-box">
+                <div class="publish-status-indicator">
+                  <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Status:</span>
+                  <span class="publish-status-pill pill-published" id="publishStatusPill">
+                    <span class="pulse-dot" style="background-color: currentColor;"></span>
+                    <span id="publishStatusText">Test Published (Active)</span>
+                  </span>
+                </div>
+                <button type="button" id="togglePublishBtn" class="btn-toggle-publish btn-stop-test"
+                  onclick="toggleTestPublish()">
+                  <i class="fa-solid fa-power-off"></i> Stop Test
+                </button>
+              </div>
+            </div>
+
+            <!-- Control 2 & 3: Sheet Navigation Direct Links -->
+            <div class="admin-card-section">
+              <div class="admin-section-title">
+                <i class="fa-solid fa-database" style="color: var(--accent-purple);"></i> 2 & 3. Connected Google Sheets
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.86rem; margin-bottom: 1rem;">
+                Open and manage authentications, marks, and question bank directly in Google Sheets.
+              </p>
+              <div class="sheet-links-grid">
+                <!-- Authentication Sheet Link -->
+                <a href="https://docs.google.com/spreadsheets/d/1GF2C5wKOkznNViw5ltg9FmS6cq3k4rUcQdnxbun0Yts/edit?gid=0#gid=0"
+                  target="_blank" class="sheet-link-card">
+                  <div class="sheet-icon-auth">
+                    <i class="fa-solid fa-users-gear"></i>
+                  </div>
+                  <div class="sheet-info">
+                    <div class="sheet-title">Authentication Sheet</div>
+                    <div class="sheet-desc">View student credentials, marks & completed submissions</div>
+                  </div>
+                  <i class="fa-solid fa-arrow-up-right-from-square sheet-external-icon"></i>
+                </a>
+
+                <!-- Questions Sheet Link -->
+                <a href="https://docs.google.com/spreadsheets/d/1gJcYUM8G8yL4AE8mhFpj-pa0T49E2zTUkrShL29Rv00/edit?gid=0#gid=0"
+                  target="_blank" class="sheet-link-card">
+                  <div class="sheet-icon-questions">
+                    <i class="fa-solid fa-file-pen"></i>
+                  </div>
+                  <div class="sheet-info">
+                    <div class="sheet-title">Questions Sheet</div>
+                    <div class="sheet-desc">View and edit question text, options A-D, and correct answers</div>
+                  </div>
+                  <i class="fa-solid fa-arrow-up-right-from-square sheet-external-icon"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Live Question Inspector Table -->
+            <div class="admin-card-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <div class="admin-section-title" style="margin-bottom: 0;">
+                  <i class="fa-solid fa-list-ol" style="color: var(--accent-emerald);"></i> Live Question Bank Inspector
+                </div>
+                <button type="button" onclick="previewQuestionsInAdmin()"
+                  style="padding: 8px 14px; font-size: 0.82rem; background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0, 242, 254, 0.4);">
+                  <i class="fa-solid fa-rotate"></i> Sync from Sheet
+                </button>
+              </div>
+              <div id="adminQuestionCountTag"
+                style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                Active Questions Count: <span id="adminQCountVal"
+                  style="color: var(--accent-cyan); font-weight: 700;">10</span>
+              </div>
+              <div
+                style="max-height: 260px; overflow-y: auto; border: 1px solid var(--glass-border); border-radius: var(--radius-sm);">
+                <table class="admin-q-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Question Text</th>
+                      <th>Options</th>
+                      <th>Answer</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminQTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -1340,24 +1817,63 @@
     </main>
   </div>
 
+  <!-- ADMIN AUTHENTICATION MODAL -->
+  <div class="admin-modal-backdrop" id="adminAuthModal">
+    <div class="admin-modal">
+      <button type="button" class="admin-modal-close" onclick="closeAdminModal()"><i
+          class="fa-solid fa-xmark"></i></button>
+      <div
+        style="font-size: 2.5rem; color: var(--accent-purple); margin-bottom: 0.75rem; filter: drop-shadow(0 0 15px rgba(157, 78, 221, 0.5));">
+        <i class="fa-solid fa-shield-cat"></i>
+      </div>
+      <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Admin Verification</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">Enter administrator password to
+        access panel</p>
+
+      <div class="input-field-wrapper">
+        <input type="password" id="adminPasswordInput" placeholder="Admin Password"
+          onkeydown="if(event.key==='Enter') verifyAdminPassword()">
+        <i class="fa-solid fa-key input-field-icon"></i>
+      </div>
+
+      <button type="button" onclick="verifyAdminPassword()"
+        style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); color: #fff; border: none; padding: 14px;">
+        <i class="fa-solid fa-right-to-bracket"></i> Login to Admin Panel
+      </button>
+      <div id="adminModalError"
+        style="color: var(--accent-rose); font-size: 0.88rem; font-weight: 700; margin-top: 12px; display: none;"></div>
+    </div>
+  </div>
+
   <!-- Hidden Printable / PDF Report Template -->
-  <div id="pdfReportTemplate" style="display: none; padding: 35px; background: #080c24; color: #ffffff; font-family: 'Inter', sans-serif; border: 2px solid #00f2fe; border-radius: 14px; width: 750px; margin: 0 auto;">
-    
+  <div id="pdfReportTemplate"
+    style="display: none; padding: 35px; background: #080c24; color: #ffffff; font-family: 'Inter', sans-serif; border: 2px solid #00f2fe; border-radius: 14px; width: 750px; margin: 0 auto;">
+
     <!-- PDF Header -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0, 242, 254, 0.3); padding-bottom: 18px; margin-bottom: 22px;">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0, 242, 254, 0.3); padding-bottom: 18px; margin-bottom: 22px;">
       <div>
-        <h1 style="font-family: 'Outfit', sans-serif; font-size: 26px; color: #00f2fe; margin: 0; font-weight: 900; letter-spacing: 0.5px;">noVeX</h1>
-        <p style="font-size: 12px; color: #a0aec0; margin: 3px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Proctored Assessment Suite</p>
+        <h1
+          style="font-family: 'Outfit', sans-serif; font-size: 26px; color: #00f2fe; margin: 0; font-weight: 900; letter-spacing: 0.5px;">
+          noVeX</h1>
+        <p
+          style="font-size: 12px; color: #a0aec0; margin: 3px 0 0 0; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">
+          Proctored Assessment Suite</p>
       </div>
       <div style="text-align: right;">
-        <span style="font-size: 11px; background: rgba(0, 242, 254, 0.15); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.4); padding: 5px 12px; border-radius: 14px; font-weight: 800; letter-spacing: 1px;">OFFICIAL PERFORMANCE REPORT</span>
+        <span
+          style="font-size: 11px; background: rgba(0, 242, 254, 0.15); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.4); padding: 5px 12px; border-radius: 14px; font-weight: 800; letter-spacing: 1px;">OFFICIAL
+          PERFORMANCE REPORT</span>
         <p id="pdfDate" style="font-size: 11px; color: #64748b; margin: 6px 0 0 0; font-weight: 500;"></p>
       </div>
     </div>
 
     <!-- Candidate Profile Section -->
-    <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 18px; margin-bottom: 20px;">
-      <h3 style="font-size: 13px; color: #38bdf8; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Candidate Details</h3>
+    <div
+      style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+      <h3
+        style="font-size: 13px; color: #38bdf8; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">
+        Candidate Details</h3>
       <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
         <tr>
           <td style="padding: 7px 0; color: #a0aec0; width: 32%; font-weight: 600;">Student Name:</td>
@@ -1375,39 +1891,48 @@
     </div>
 
     <!-- Score Breakdown & Status Section -->
-    <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 18px; margin-bottom: 22px;">
-      <h3 style="font-size: 13px; color: #38bdf8; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Assessment Results Summary</h3>
-      
-      <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 18px; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 8px;">
+    <div
+      style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 18px; margin-bottom: 22px;">
+      <h3
+        style="font-size: 13px; color: #38bdf8; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">
+        Assessment Results Summary</h3>
+
+      <div
+        style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 18px; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 8px;">
         <div>
           <div style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700;">Marks Secured</div>
           <div id="pdfScore" style="font-size: 28px; font-weight: 900; color: #00f2fe; margin-top: 3px;">0 / 10</div>
         </div>
         <div>
-          <div style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700;">Percentage Score</div>
+          <div style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700;">Percentage Score
+          </div>
           <div id="pdfPercentage" style="font-size: 28px; font-weight: 900; color: #ffffff; margin-top: 3px;">0%</div>
         </div>
         <div>
-          <div style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">Evaluation Status</div>
-          <div id="pdfStatus" style="font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 14px; display: inline-block; letter-spacing: 0.5px;">COMPLETED</div>
+          <div
+            style="font-size: 11px; color: #a0aec0; text-transform: uppercase; font-weight: 700; margin-bottom: 6px;">
+            Evaluation Status</div>
+          <div id="pdfStatus"
+            style="font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 14px; display: inline-block; letter-spacing: 0.5px;">
+            COMPLETED</div>
         </div>
       </div>
 
       <!-- Remarks / Violation message -->
-      <div id="pdfRemarksBox" style="font-size: 12px; padding: 12px 16px; border-radius: 8px; background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); color: #e2e8f0; line-height: 1.5;">
-        <strong style="color: #00f2fe;">Remarks:</strong> <span id="pdfRemarksText">Candidate completed the assessment.</span>
+      <div id="pdfRemarksBox"
+        style="font-size: 12px; padding: 12px 16px; border-radius: 8px; background: rgba(0, 242, 254, 0.08); border: 1px solid rgba(0, 242, 254, 0.3); color: #e2e8f0; line-height: 1.5;">
+        <strong style="color: #00f2fe;">Remarks:</strong> <span id="pdfRemarksText">Candidate completed the
+          assessment.</span>
       </div>
     </div>
 
     <!-- PDF Footer & Credits -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 16px; font-size: 11px; color: #64748b;">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 16px; font-size: 11px; color: #64748b;">
       <div>Website: <strong style="color: #a0aec0;">noVeX Proctored Assessment Suite</strong></div>
       <div>Credits: <strong style="color: #a0aec0;">Developed by weBnovA</strong></div>
       <div>Security Guard: <strong style="color: #00e676;">Verified & Logged</strong></div>
     </div>
-  </div>
-
-    </main>
   </div>
 
   <!-- Footer -->
@@ -1422,27 +1947,186 @@
        JAVASCRIPT ENGINE (100% PRESERVED LOGIC & API CONTRACTS)
        ========================================================================== -->
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwHSdgwaUS97S-u-Rn3wO__OstdBsa0D_9nEeP0xYQgTOvFMnh4jFfE06jqXKqYHkmt/exec"; // Apps Script URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxeypyM4Von1XwI3Gwfr1AeUlPJszBmbRRT-pB6dJruyZUJ5PVX3uSMk_40Os6Zt5wF/exec"; // Apps Script URL
 
-    // ====== Assessment Questions (10 Questions) ======
-    const quizData = [
-      { question: "Which file holds project dependencies in Node.js?", options: ["package.json", "node.json", "app.js", "index.js"], answer: "package.json" },
-      { question: "Which component is used to display a scrollable list in Android?", options: ["CardView", "RecyclerView", "ImageView", "ConstraintLayout"], answer: "RecyclerView" },
-      { question: "Which programming language is mainly used with Flutter?", options: ["Python", "Java", "Dart", "Swift"], answer: "Dart" },
-      { question: "Which tool is commonly used for UI/UX design?", options: ["VS Code", "Figma", "Xcode", "Eclipse"], answer: "Figma" },
-      { question: "Which tag defines a table row in HTML?", options: ["<tr>", "<td>", "<th>", "<table>"], answer: "<tr>" },
-      { question: "What is the main goal of UX design?", options: ["Making visuals attractive", "Increasing page load speed", "Reducing app size", "Improving user satisfaction"], answer: "Improving user satisfaction" },
-      { question: "Which programming language is primarily used for Android app development?", options: ["Swift", "Kotlin", "PHP", "Ruby"], answer: "Kotlin" },
-      { question: "Which keyword is used to import modules in Node.js?", options: ["import", "use", "require", "include"], answer: "require" },
-      { question: "What does HTML stand for?", options: ["HyperText Markup Language", "HighText Machine Language", "Home Tool Markup Language", "Hyper Tool Multi Language"], answer: "HyperText Markup Language" },
-      { question: "Which company created React Native?", options: ["Meta (Facebook)", "Google", "Apple", "Microsoft"], answer: "Meta (Facebook)" }
-    ];
+    // Connected Google Sheets IDs
+    const AUTH_SPREADSHEET_ID = '1GF2C5wKOkznNViw5ltg9FmS6cq3k4rUcQdnxbun0Yts';
+    const QUESTION_SPREADSHEET_ID = '1gJcYUM8G8yL4AE8mhFpj-pa0T49E2zTUkrShL29Rv00';
+
+    // ====== Assessment Questions (Loaded from Google Sheet) ======
+    let quizData = [];
 
     // ====== State ======
     let currentQ = 0, score = 0, timer, timeLeft = 20;
     let quizActive = false;
     let hasSubmitted = false;
     let sessionToken = null;
+    let isTestPublished = localStorage.getItem("test_published") !== "false"; // default true
+
+    // ====== Admin Functions ======
+    function openAdminModal() {
+      document.getElementById("adminPasswordInput").value = "";
+      document.getElementById("adminModalError").style.display = "none";
+      document.getElementById("adminAuthModal").style.display = "flex";
+      document.getElementById("adminPasswordInput").focus();
+    }
+
+    function closeAdminModal() {
+      document.getElementById("adminAuthModal").style.display = "none";
+    }
+
+    function verifyAdminPassword() {
+      const pass = document.getElementById("adminPasswordInput").value.trim();
+      const errEl = document.getElementById("adminModalError");
+
+      if (pass === "admin@123") {
+        closeAdminModal();
+        showAdminPanel();
+      } else {
+        errEl.innerText = "⚠️ Invalid Admin Password!";
+        errEl.style.display = "block";
+      }
+    }
+
+    function showAdminPanel() {
+      document.querySelector(".login-box").style.display = "none";
+      document.querySelector(".start-box").style.display = "none";
+      document.querySelector(".quiz-box").style.display = "none";
+      document.querySelector(".result-box").style.display = "none";
+
+      document.getElementById("adminPanelBox").style.display = "block";
+      updatePublishUI();
+      renderAdminQTable();
+    }
+
+    function hideAdminPanel() {
+      document.getElementById("adminPanelBox").style.display = "none";
+      document.querySelector(".login-box").style.display = "block";
+    }
+
+    function toggleTestPublish() {
+      isTestPublished = !isTestPublished;
+      localStorage.setItem("test_published", isTestPublished);
+      updatePublishUI();
+    }
+
+    function updatePublishUI() {
+      const pill = document.getElementById("publishStatusPill");
+      const text = document.getElementById("publishStatusText");
+      const btn = document.getElementById("togglePublishBtn");
+
+      if (isTestPublished) {
+        pill.className = "publish-status-pill pill-published";
+        text.innerText = "Test Published (Active)";
+        btn.className = "btn-toggle-publish btn-stop-test";
+        btn.innerHTML = `<i class="fa-solid fa-power-off"></i> Stop Test`;
+      } else {
+        pill.className = "publish-status-pill pill-stopped";
+        text.innerText = "Test Stopped (Paused)";
+        btn.className = "btn-toggle-publish btn-publish-test";
+        btn.innerHTML = `<i class="fa-solid fa-circle-play"></i> Publish Test`;
+      }
+    }
+
+    function renderAdminQTable() {
+      const tableBody = document.getElementById("adminQTableBody");
+      const countVal = document.getElementById("adminQCountVal");
+      if (countVal) countVal.innerText = quizData.length;
+
+      if (!tableBody) return;
+      tableBody.innerHTML = "";
+
+      if (quizData.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+              No questions loaded from Google Sheet yet.<br><br>
+              <button onclick="fetchQuestionsFromSheet(true)" class="btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">
+                <i class="fa-solid fa-arrows-rotate"></i> Load Questions from Sheet
+              </button>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      quizData.forEach((q, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="font-weight: 700; color: var(--accent-cyan);">${idx + 1}</td>
+          <td style="font-weight: 600;">${q.question}</td>
+          <td style="font-size: 0.8rem; color: var(--text-muted);">${(q.options || []).join(" | ")}</td>
+          <td><span style="background: rgba(0, 230, 118, 0.15); color: var(--accent-emerald); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 0.78rem;">${q.answer}</span></td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function previewQuestionsInAdmin() {
+      fetchQuestionsFromSheet(true);
+    }
+
+    // ====== Fetch Questions from Google Sheet ======
+    function fetchQuestionsFromSheet(isManual = false) {
+      if (!SCRIPT_URL) return;
+
+      fetch(`${SCRIPT_URL}?action=getQuestions&regNo=DEMO`)
+        .then(res => res.json())
+        .then(data => {
+          if ((data.success || data.status === "success") && Array.isArray(data.questions) && data.questions.length > 0) {
+            quizData = data.questions.map((q, idx) => {
+              const opts = [
+                q.optionA || (q.options ? q.options[0] : ''),
+                q.optionB || (q.options ? q.options[1] : ''),
+                q.optionC || (q.options ? q.options[2] : ''),
+                q.optionD || (q.options ? q.options[3] : '')
+              ].filter(Boolean);
+
+              return {
+                id: q.id || `q${idx + 1}`,
+                question: q.question || '',
+                options: opts.length ? opts : ["Option A", "Option B", "Option C", "Option D"],
+                answer: q.answer || opts[0]
+              };
+            });
+
+            updateQuestionCountDisplays();
+            if (isManual) {
+              alert(`✓ Loaded ${quizData.length} questions successfully from Google Sheet!`);
+            }
+          } else {
+            console.warn("No questions found in Google Sheet response:", data);
+            quizData = [];
+            updateQuestionCountDisplays();
+            if (isManual) {
+              alert("⚠️ No questions found in Google Sheet.");
+            }
+          }
+        })
+        .catch(err => {
+          console.error("Could not fetch questions from Google Sheet:", err);
+          quizData = [];
+          updateQuestionCountDisplays();
+          if (isManual) {
+            alert("⚠️ Could not connect to Google Apps Script endpoint to fetch questions.");
+          }
+        });
+    }
+
+    function updateQuestionCountDisplays() {
+      const startBoxVal = document.getElementById("startBoxTotalQVal");
+      if (startBoxVal) {
+        startBoxVal.innerText = quizData.length > 0 ? `${quizData.length} Questions` : "0 Questions (Loading...)";
+      }
+
+      const adminCountVal = document.getElementById("adminQCountVal");
+      if (adminCountVal) adminCountVal.innerText = quizData.length;
+
+      const pdfTotalVal = document.getElementById("scoreTotal");
+      if (pdfTotalVal) pdfTotalVal.innerText = quizData.length;
+
+      renderAdminQTable();
+    }
 
     // ====== Helpers: Fullscreen ======
     function enterFullscreen() {
@@ -1515,6 +2199,8 @@
         body: JSON.stringify({
           action: "register",
           regId: regId,
+          regNo: regId,
+          registerNo: regId,
           password: password,
           name: name,
           department: department
@@ -1593,6 +2279,11 @@
       err.style.color = "var(--accent-rose)";
       err.innerText = "";
 
+      if (!isTestPublished) {
+        err.innerText = "⚠️ The test is currently STOPPED by the administrator. Please check back later.";
+        return;
+      }
+
       if (!regId && !password) {
         err.innerText = "⚠️ Please enter both Register Number and Password!";
         return;
@@ -1609,7 +2300,7 @@
 
       fetch(SCRIPT_URL, {
         method: "POST",
-        body: JSON.stringify({ action: "login", regId, password })
+        body: JSON.stringify({ action: "login", regId: regId, regNo: regId, registerNo: regId, password: password })
       })
         .then(res => res.json())
         .then(data => {
@@ -1641,7 +2332,10 @@
             document.getElementById("sideName").innerText = sName;
             document.getElementById("sideDept").innerText = sDept;
 
-          } else if (data.status === "already") {
+            // Fetch live questions for student
+            fetchQuestionsFromSheet();
+
+          } else if (data.status === "already" || data.alreadyCompleted) {
             document.querySelector(".login-box .card").innerHTML =
               `<h2>Attempt Recorded</h2><p style="color: var(--accent-amber); margin-top: 1rem; font-weight: 600;">You have already completed this quiz.</p>`;
           } else {
@@ -1672,6 +2366,9 @@
             document.getElementById("sideReg").innerText = foundUser.registerNo;
             document.getElementById("sideName").innerText = foundUser.name;
             document.getElementById("sideDept").innerText = foundUser.dept;
+
+            // Fetch live questions from Google Sheet
+            fetchQuestionsFromSheet();
           } else {
             err.innerText = "Invalid Register No or Password!";
           }
@@ -1680,6 +2377,17 @@
 
     // ====== Start Quiz ======
     function startQuiz() {
+      if (!isTestPublished) {
+        alert("⚠️ The test is currently stopped by the administrator.");
+        return;
+      }
+
+      if (!quizData || quizData.length === 0) {
+        alert("⚠️ Questions have not been loaded from the Google Sheet yet. Fetching questions now...");
+        fetchQuestionsFromSheet(true);
+        return;
+      }
+
       document.querySelector(".start-box").style.display = "none";
       document.querySelector(".quiz-box").style.display = "block";
       quizActive = true;
@@ -1693,10 +2401,16 @@
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
+        const modal = document.getElementById("adminAuthModal");
+        if (modal && modal.style.display === "flex") {
+          verifyAdminPassword();
+          return;
+        }
+
         const regSection = document.getElementById("registerFormSection");
         if (regSection && regSection.style.display !== "none") {
           register();
-        } else {
+        } else if (document.querySelector(".login-box") && document.querySelector(".login-box").style.display !== "none") {
           login();
         }
       }
@@ -1859,7 +2573,7 @@
           pdfRemarksBox.style.borderColor = "rgba(0, 242, 254, 0.3)";
         }
         if (pdfRemarksText) {
-          pdfRemarksText.innerText = `Candidate successfully completed the assessment with a score of ${score}/10 (${percentage}%).`;
+          pdfRemarksText.innerText = `Candidate successfully completed the assessment with a score of ${score}/${totalQ} (${percentage}%).`;
         }
       }
 
@@ -1871,6 +2585,8 @@
         body: JSON.stringify({
           action: "submitScore",
           regId: regId,
+          regNo: regId,
+          registerNo: regId,
           score: score,
           token: token,
           forced: !!forcedEnd
@@ -1972,13 +2688,17 @@
 
     document.addEventListener("contextmenu", (e) => e.preventDefault());
 
-    // ====== Interactive Mouse Cursor Spotlight Effect ======
+    // ====== Interactive Mouse Cursor Spotlight Effect & Initializer ======
     document.addEventListener("mousemove", (e) => {
       const glow = document.getElementById("cursor-glow");
       if (glow) {
         glow.style.left = e.clientX + "px";
         glow.style.top = e.clientY + "px";
       }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchQuestionsFromSheet();
     });
   </script>
 </body>
